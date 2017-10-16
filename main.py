@@ -165,12 +165,16 @@ print ''.join(decoded)
 # X, Y => 114, 115
 
 # Don't get the logic, the ASCII offsets seem to go in a repeating pattern, switching signs between blocks (32), thus:
-offsets = [
-    42, 42, 38, 38, 42, 42, 38, 38, 26, 26, 22, 22, 38, 38, 22, 22, 42, 42, 38, 38, 42, 42, 38, 38, 26, 26, 22, 22, 38, 38, 22, 22,
-    -22, -22, -26, -26, -22, -22, -26, -26, -38, -38, -42, -42, -38, -38, -42, -42, -22, -22, -26, -26, -22, -22, -26, -26, -38, -38, -42, -42, -38, -38, -42, -42,
-    42, 42, 38, 38, 42, 42, 38, 38, 26, 26, 22, 22, 38, 38, 22, 22, 42, 42, 38, 38, 42, 42, 38, 38, 26, 26, 22, 22, 38, 38, 22, 22,
-    -22, -22, -26, -26, -22, -22, -26, -26, -38, -38, -42, -42, -38, -38, -42, -42, -22, -22, -26, -26, -22, -22, -26, -26, -38, -38, -42, -42, -38, -38, -42, -42,
-]
+# offsets = [
+#     42, 42, 38, 38, 42, 42, 38, 38, 26, 26, 22, 22, 38, 38, 22, 22, 42, 42, 38, 38, 42, 42, 38, 38, 26, 26, 22, 22, 38, 38, 22, 22,
+#     -22, -22, -26, -26, -22, -22, -26, -26, -38, -38, -42, -42, -38, -38, -42, -42, -22, -22, -26, -26, -22, -22, -26, -26, -38, -38, -42, -42, -38, -38, -42, -42,
+#     42, 42, 38, 38, 42, 42, 38, 38, 26, 26, 22, 22, 38, 38, 22, 22, 42, 42, 38, 38, 42, 42, 38, 38, 26, 26, 22, 22, 38, 38, 22, 22,
+#     -22, -22, -26, -26, -22, -22, -26, -26, -38, -38, -42, -42, -38, -38, -42, -42, -22, -22, -26, -26, -22, -22, -26, -26, -38, -38, -42, -42, -38, -38, -42, -42,
+# ]
+#
+# deciphered_ascii = [i + offsets[i] for i in xrange(128)]
+# print ''.join([chr(deciphered_ascii[symbol]) for symbol in msg])
 
-deciphered_ascii = [i + offsets[i] for i in xrange(128)]
-print ''.join([chr(deciphered_ascii[symbol]) for symbol in msg])
+# https://www.facebook.com/simq03 finally showed me how the ASCII offsets come to be, it's simply XORing with 42 : )
+# Keeping all the bollocks I used to figure out the message for posterity
+print(''.join([chr(symbol ^ 42) for symbol in msg]))
